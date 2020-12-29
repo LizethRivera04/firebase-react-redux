@@ -29,6 +29,18 @@
         color:white;
     }
 }
+.btn-sucess{
+    background-color: $green;
+    color: white;
+
+    &:disabled{
+        background-color: lighten($color: $primary, $amount: 15%);
+    }
+    &:hover{
+        background-color:darken($color: $primary, $amount: 10%);
+        color:white;
+    }
+}
 .btn-block{
     width: 100%;
 }

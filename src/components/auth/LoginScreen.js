@@ -6,13 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, startGoogleLogin, startLoginWithPassword } from '../../actions/auth';
 import validator from 'validator';
 import { removeError, showError } from '../../actions/register';
-
+import Loader from 'react-loader-spinner';
 
 const LoginScreen = () => {
     //sirve para hacer dispatch de acciones
     const dispatch = useDispatch();
 
-    const { msgError } = useSelector(state => state.uiregister)
+    const { msgError, loading } = useSelector(state => state.uiregister)
 
     const [values, handleInputChange, reset] = useForm({
         email: 'alton@gmail.com',
@@ -60,9 +60,10 @@ const LoginScreen = () => {
                 onSubmit={handleLogin}
             >
 
-                {
-                    msgError !== null && (<div className="auth__alert-error">{msgError}</div>)
-                }
+                {msgError !== null && (<div className="auth__alert-error">{msgError}</div>)}
+                {loading && (<Loader type="Puff" color="#14b8a6" height={40} width={40} style={{ textAlign: "center" }} />)}
+
+
                 <input
                     type="text"
                     placeholder="Email"
@@ -81,11 +82,13 @@ const LoginScreen = () => {
                     value={password}
                     onChange={handleInputChange}
                 />
+
                 <button
                     type="submit"
                     className="btn btn-primary pointer btn-block"
-                    disabled={false}
+                    disabled={loading}
                 >Login</button>
+
 
 
                 <div className="auth__social-networks">

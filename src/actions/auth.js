@@ -1,20 +1,23 @@
 import types from "../typesReducer/types"
 import { firebase, googleAuthProvider } from '../firebase/firebase-config'
-import { showError } from "./register"
+import { finishLoading, showError, startLoading } from "./register"
 //actions del login
 
 export const startLoginWithPassword = (email, password) => {
     //las acc asinc retornan un callback
     return (dispatch) => {
+        dispatch(startLoading())
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(({ user }) => {
                 console.log(user);
                 dispatch(
                     login(user.uid, user.displayName)
                 )
+                dispatch(finishLoading())
             }).catch(e => {
                 //console.log(e.message);
                 dispatch(showError(e.message))
+                dispatch(finishLoading())
             })
     }
 }
