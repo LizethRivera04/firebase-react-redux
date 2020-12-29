@@ -2,17 +2,21 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import useForm from '../../hooks/useForm'
 //importamos el useDispatch
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login, startGoogleLogin, startLoginWithPassword } from '../../actions/auth';
+import validator from 'validator';
+import { removeError, showError } from '../../actions/register';
 
 
 const LoginScreen = () => {
     //sirve para hacer dispatch de acciones
     const dispatch = useDispatch();
 
+    const { msgError } = useSelector(state => state.uiregister)
+
     const [values, handleInputChange, reset] = useForm({
         email: 'alton@gmail.com',
-        password: '12345'
+        password: '123456'
     })
 
     const { email, password } = values;
@@ -23,9 +27,26 @@ const LoginScreen = () => {
         e.preventDefault()
         console.log(email, password);
         //le mandamos al dispatch el login
-        dispatch(startLoginWithPassword
-            (email, password))
+        if (isFormLoginValid()) {
+            dispatch(startLoginWithPassword(email, password))
+        }
+    }
 
+    const isFormLoginValid = () => {
+        //validamos que el email tenga estructura email
+        if (!validator.isEmail(email)) {
+            dispatch(showError("Ingresa un correo valido"));
+            return false
+        }
+        //validamos que las dos contraseñas sean iguales
+        if (password.length < 6) {
+            dispatch(showError("La contraseña debe tener al menos 6 carácteres"));
+            return false
+        }
+        else {
+            dispatch(removeError())
+            return true
+        }
     }
 
     const handleGoogleLogin = () => {
@@ -38,6 +59,10 @@ const LoginScreen = () => {
             <form
                 onSubmit={handleLogin}
             >
+
+                {
+                    msgError !== null && (<div className="auth__alert-error">{msgError}</div>)
+                }
                 <input
                     type="text"
                     placeholder="Email"

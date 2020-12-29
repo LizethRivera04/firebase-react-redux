@@ -1,22 +1,58 @@
 import types from "../typesReducer/types"
 import { firebase, googleAuthProvider } from '../firebase/firebase-config'
+import { showError } from "./register"
 //actions del login
 
 export const startLoginWithPassword = (email, password) => {
     //las acc asinc retornan un callback
     return (dispatch) => {
-        setTimeout(() => {
-            dispatch(login(1243, 'Pedro'))
-        }, 3500)
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(({ user }) => {
+                console.log(user);
+                dispatch(
+                    login(user.uid, user.displayName)
+                )
+            }).catch(e => {
+                //console.log(e.message);
+                dispatch(showError(e.message))
+            })
     }
 }
 
+
+//registrar con email y contraseña
+export const startRegisterWithEmailPasswordName = (email, password, name) => {
+    return (dispatch) => {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(async ({ user }) => {
+                //actualizamos el user con el name porque al usar este met de registro no trae el displayName
+                await user.updateProfile({ displayName: name })
+                console.log(user);
+                //se manda el dispatch de la func login para que el reducer cambie el edo
+                dispatch(
+                    login(user.uid, user.displayName)
+                )
+            }).catch(e => {
+                //console.log(e.message);
+                dispatch(showError(e.message))
+            })
+    }
+
+}
+
+
 //
 export const startGoogleLogin = () => {
+    //como es una tarea asincrona debe retornar un callback
     return (dispatch) => {
         firebase.auth().signInWithPopup(googleAuthProvider)
-            .then(userCredential => {
-                console.log(userCredential);
+            //desestructuramos el obj que nos trae    
+            .then(({ user }) => {
+                console.log(user);
+                //se manda el dispatch de la func login para que el reducer cambie el edo
+                dispatch(
+                    login(user.uid, user.displayName)
+                )
             })
     }
 }
