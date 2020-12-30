@@ -11,6 +11,8 @@ import { firebase } from '../firebase/firebase-config'
 import { useDispatch } from 'react-redux';
 import { login } from '../actions/auth';
 import Spinner from '../components/spinner/Spinner'
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 const AppRouter = () => {
 
@@ -19,6 +21,8 @@ const AppRouter = () => {
     const [checking, setChecking] = useState(true)
     //state para saber si está logueado el user
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+
     useEffect(() => {
         //creamos un observable 
         firebase.auth().onAuthStateChanged((user) => {
@@ -41,21 +45,26 @@ const AppRouter = () => {
         //agregamos el dispatch como dep para que deje de mostrar warning
     }, [dispatch, setChecking, setIsLoggedIn])
 
-    /* if (checking) {
-        return (<Spinner />)
-    } */
-
+    /*  if (checking) {
+         return (<Spinner />)
+     } */
+    //
     return (
+
         <Router>
             <div>
+                {checking && (<Spinner />)}
                 <Switch>
-                    <Route path="/auth">
-                        {checking && (<Spinner />)}
-                        <AuthRouter />
-                    </Route>
-                    <Route exact path="/">
-                        <JournalScreen />
-                    </Route>
+                    <PublicRoute
+                        path="/auth"
+                        component={AuthRouter}
+                        isLoggedIn={isLoggedIn}
+                    />
+                    <PrivateRoute
+                        exact
+                        path="/"
+                        component={JournalScreen}
+                        isLoggedIn={isLoggedIn} />
                     <Redirect to="auth/login" />
                 </Switch>
             </div>
