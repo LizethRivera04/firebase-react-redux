@@ -13,6 +13,8 @@ import { login } from '../actions/auth';
 import Spinner from '../components/spinner/Spinner'
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import { loadNotes } from '../helpers/loadNotes';
+import { setNotes } from '../actions/notes';
 
 const AppRouter = () => {
 
@@ -25,13 +27,15 @@ const AppRouter = () => {
 
     useEffect(() => {
         //creamos un observable 
-        firebase.auth().onAuthStateChanged((user) => {
+        firebase.auth().onAuthStateChanged(async (user) => {
             console.log(user);
             //verificamos que existe el user y que tenga la prop uid
             if (user?.uid) {
                 dispatch(login(user.uid, user.displayName))
                 //si se cumple esta condic..
                 setIsLoggedIn(true)
+                const notes = await loadNotes(user.uid)
+                dispatch(setNotes(notes))
             }
             //, si es null...
             else {
