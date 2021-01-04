@@ -1,3 +1,6 @@
+//sweet alert
+import Swal from 'sweetalert2';
+
 import types from "../typesReducer/types"
 import { firebase, googleAuthProvider } from '../firebase/firebase-config'
 import { finishLoading, showError, startLoading } from "./register"
@@ -16,8 +19,9 @@ export const startLoginWithPassword = (email, password) => {
                 dispatch(finishLoading())
             }).catch(e => {
                 //console.log(e.message);
-                dispatch(showError(e.message))
+                // dispatch(showError(e.message))
                 dispatch(finishLoading())
+                Swal.fire('Error', e.message, 'error')
             })
     }
 }
@@ -37,7 +41,8 @@ export const startRegisterWithEmailPasswordName = (email, password, name) => {
                 )
             }).catch(e => {
                 //console.log(e.message);
-                dispatch(showError(e.message))
+                //dispatch(showError(e.message))
+                Swal.fire('Error', e.message, 'error')
             })
     }
 

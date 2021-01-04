@@ -53,6 +53,10 @@ const LoginScreen = () => {
         dispatch(startGoogleLogin())
     }
 
+
+    const handleRemoveError = () => {
+        dispatch(removeError())
+    }
     return (
         <div>
             <h3 className="auth__title text-center">Login</h3>
@@ -107,7 +111,9 @@ const LoginScreen = () => {
                 </div>
                 <Link
                     to="/auth/register"
-                    className="link">
+                    className="link"
+                    onClick={handleRemoveError}
+                >
                     Create new account
                 </Link>
 

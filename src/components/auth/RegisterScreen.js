@@ -55,6 +55,9 @@ const RegisterScreen = () => {
 
     }
 
+    const handleRemoveError = () => {
+        dispatch(removeError())
+    }
 
     return (
         <div>
@@ -113,7 +116,9 @@ const RegisterScreen = () => {
 
                 <Link
                     to="/auth/login"
-                    className="link">
+                    className="link"
+                    onClick={handleRemoveError}
+                >
                     Already register?
             </Link>
 
