@@ -5,8 +5,8 @@ const useForm = (initialState = {}) => {
 
 
     //limpiar los campos
-    const reset = () => {
-        setValues(initialState)
+    const reset = (newFormState = initialState) => {
+        setValues(newFormState)
     }
 
     const handleInputChange = e => {
