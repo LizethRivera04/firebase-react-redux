@@ -13,8 +13,7 @@ import { login } from '../actions/auth';
 import Spinner from '../components/spinner/Spinner'
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
-import { loadNotes } from '../helpers/loadNotes';
-import { setNotes } from '../actions/notes';
+import { starLoadingNotes } from '../actions/notes';
 
 const AppRouter = () => {
 
@@ -34,8 +33,8 @@ const AppRouter = () => {
                 dispatch(login(user.uid, user.displayName))
                 //si se cumple esta condic..
                 setIsLoggedIn(true)
-                const notes = await loadNotes(user.uid)
-                dispatch(setNotes(notes))
+
+                dispatch(starLoadingNotes(user.uid))
             }
             //, si es null...
             else {

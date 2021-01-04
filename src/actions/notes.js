@@ -1,4 +1,5 @@
 import { db } from "../firebase/firebase-config"
+import { loadNotes } from "../helpers/loadNotes"
 import types from "../typesReducer/types"
 
 
@@ -26,6 +27,14 @@ export const activeNote = (id, note) => {
         }
     }
 }
+
+export const starLoadingNotes = (uid) => {
+    return async (dispatch) => {
+        const notes = await loadNotes(uid)
+        dispatch(setNotes(notes))
+    }
+}
+
 
 export const setNotes = (notes) => {
     return {
