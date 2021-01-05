@@ -1,18 +1,24 @@
 import React, { useEffect, useRef } from 'react'
 import NotesAppBar from './NotesAppBar'
 import Cat from '../../assets/images/cat.jpg';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useForm from '../../hooks/useForm';
+import { activeNote } from '../../actions/notes';
 
 const NoteScreen = () => {
     const { active } = useSelector(state => state.notes)
     console.log(active);
 
+    const dispatch = useDispatch()
+
     const [values, handleInputChange, reset] = useForm(active);
-    const { body, title } = values
+    const { body, title } = values;
+    console.log(body);
 
     const activeId = useRef(active.id)
     console.log(active.id, activeId);
+
+    //para cambiar el contenido de los inputs si elijo otra tarea activa
     useEffect(() => {
         //solo se dispara si el active.id cambió...
         if (active.id !== activeId.current) {
@@ -22,6 +28,11 @@ const NoteScreen = () => {
             activeId.current = active.id
         }
     }, [active, reset])
+
+    //par actualizar el state si cambian los val de los inputs
+    useEffect(() => {
+        dispatch(activeNote(values.id, { ...values }))
+    }, [values, dispatch])
 
     return (
 
@@ -34,6 +45,7 @@ const NoteScreen = () => {
                         placeholder="Some awesome title"
                         className="notes__title-input"
                         autoComplete="off"
+                        name="title"
                         value={title}
                         onChange={handleInputChange}
 
@@ -42,6 +54,7 @@ const NoteScreen = () => {
                     <textarea
                         placeholder="What happend today?"
                         className="notes__textarea"
+                        name="body"
                         value={body}
                         onChange={handleInputChange}
                     >
