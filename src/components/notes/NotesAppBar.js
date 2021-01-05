@@ -5,6 +5,8 @@ import { startUploading, startUploadNote } from '../../actions/notes'
 const NotesAppBar = () => {
     const dispatch = useDispatch();
     const { active } = useSelector(state => state.notes)
+
+
     const handleUpload = () => {
         dispatch(startUploadNote(active))
     }

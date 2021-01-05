@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import types from "../typesReducer/types"
 import { firebase, googleAuthProvider } from '../firebase/firebase-config'
 import { finishLoading, showError, startLoading } from "./register"
+import { notesLogout } from './notes';
 //actions del login
 
 export const startLoginWithPassword = (email, password) => {
@@ -82,6 +83,8 @@ export const startLogOut = () => {
     return async (dispatch) => {
         await firebase.auth().signOut();
         dispatch(logout())
+        dispatch(notesLogout())
+
 
     }
 };
@@ -92,3 +95,4 @@ export const logout = () => {
     }
 
 }
+
