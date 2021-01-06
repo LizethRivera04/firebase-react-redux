@@ -23,27 +23,41 @@ const JournalEntrie = ({ id, date, title, body, url }) => {
             onClick={handleEntryClick}
         >
             {
-                url &&
-                <div className="journal_entry-picture"
-                    style={{
+                url ?
+                    <div className="journal_entry-picture"
+                        style={{
 
-                        backgroundColor: 'cover',
-                        backgroundImage: `url(${url})`,
-                        backgroundSize: "cover",
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "center"
-                    }}>
+                            backgroundColor: 'cover',
+                            backgroundImage: `url(${url})`,
+                            backgroundSize: "cover",
+                            backgroundRepeat: "no-repeat",
+                            backgroundPosition: "center"
+                        }}>
 
-                </div>
+                    </div>
+                    : <div className="journal_entry-picture"
+                        style={{
+
+                            backgroundColor: 'cover',
+                            backgroundImage: `url(${Cat})`,
+                            backgroundSize: "cover",
+                            backgroundRepeat: "no-repeat",
+                            backgroundPosition: "center"
+                        }}>
+
+                    </div>
             }
-            <div className="journal__entry-body">
-                <p className="journal__entry-title">{title}</p>
-                <p className="journal__entry-content">{body}</p>
+            <div className="journal__entry-note">
+                <div className="journal__entry-body">
+                    <p className="journal__entry-title">{title}</p>
+                    <p className="journal__entry-content">{body}</p>
+                </div>
+                <div className="journal__entrie-date-box">
+                    <span>{noteDate.format('dddd')}</span>
+                    <h4>{noteDate.format('D')}</h4>
+                </div>
             </div>
-            <div className="journal__entrie-date-box">
-                <span>{noteDate.format('dddd')}</span>
-                <h4>{noteDate.format('D')}</h4>
-            </div>
+
         </div>
     )
 }

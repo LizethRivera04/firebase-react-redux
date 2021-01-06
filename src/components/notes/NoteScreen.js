@@ -44,37 +44,53 @@ const NoteScreen = () => {
         <div className="notes__main-content">
             <NotesAppBar />
             <div className="notes__content">
-                <form>
-                    <input
-                        type="text"
-                        placeholder="Some awesome title"
-                        className="notes__title-input"
-                        autoComplete="off"
-                        name="title"
-                        value={title}
-                        onChange={handleInputChange}
-
-                    />
-
-                    <textarea
-                        placeholder="What happend today?"
-                        className="notes__textarea"
-                        name="body"
-                        value={body}
-                        onChange={handleInputChange}
-                    >
-                    </textarea>
-                    {active.url &&
+                <div className="notes__content-image">
+                    {active.url ?
                         <div className="notes__image">
                             <img src={active.url} alt="imagen" />
+                        </div>
+                        : <div className="notes__image">
+                            <img src={Cat} alt="imagen" />
                         </div>}
+                </div>
+
+                <div className="notes__note">
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Some awesome title"
+                            className="notes__title-input"
+                            autoComplete="off"
+                            name="title"
+                            value={title}
+                            onChange={handleInputChange}
+
+                        />
+                    </div>
+                    <div>
+                        <textarea
+                            placeholder="What happend today?"
+                            className="notes__textarea"
+                            name="body"
+                            value={body}
+                            onChange={handleInputChange}
+                        >
+                        </textarea>
+                    </div>
+
+
+
+
 
                     <button
                         className="btn btn-danger"
                         onClick={handleDelete}
 
                     >Delete</button>
-                </form>
+
+                </div>
+
+
             </div>
         </div>
     )

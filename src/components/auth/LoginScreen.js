@@ -62,6 +62,7 @@ const LoginScreen = () => {
             <h3 className="auth__title text-center">Login</h3>
             <form
                 onSubmit={handleLogin}
+                className="animate__animated animate__fadeIn animate__faster"
             >
 
                 {msgError !== null && (<div className="auth__alert-error">{msgError}</div>)}

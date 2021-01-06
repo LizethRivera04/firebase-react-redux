@@ -18,7 +18,7 @@ const Sidebar = () => {
         <aside className="journal__sidebar">
             <div className="journal__sidebar-navbar mt-5">
                 <h3>
-                    <i className="far fa-moon"></i>
+                    <i className="far fa-moon journal__icon"></i>
                     <span>{name}</span>
                 </h3>
                 <button

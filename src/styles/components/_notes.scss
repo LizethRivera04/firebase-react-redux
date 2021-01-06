@@ -15,9 +15,15 @@
 }
 .notes__content{
     display: flex;
-    flex-direction: column;
     height: 100%;
     padding: 20px;
+}
+.notes__content-image{
+    margin-top: 30px;
+    margin-right: 100px;
+}
+.notes__note{
+    margin-top: 30px;
 }
 .notes__title-input,.notes__textarea{
 border:none;
@@ -34,12 +40,14 @@ border:none;
 }
 .notes__textarea{
     border:2px solid $primary;
+    border-radius: 10px;
     color: $dark-grey;
     font-size: 20px;
     flex: 1 1 auto;
     resize: none;
+    width: 300px;
 }
 .notes__image img{
 box-shadow:5px 5px $dark-grey ;
-height: 50px;
+width: 350px;
 }
