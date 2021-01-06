@@ -43,7 +43,9 @@ const NoteScreen = () => {
 
         <div className="notes__main-content">
             <NotesAppBar />
+            <p className="notes__title">¿Qué estás pensando el día de hoy?</p>
             <div className="notes__content">
+
                 <div className="notes__content-image">
                     {active.url ?
                         <div className="notes__image">
@@ -77,9 +79,6 @@ const NoteScreen = () => {
                         >
                         </textarea>
                     </div>
-
-
-
 
 
                     <button

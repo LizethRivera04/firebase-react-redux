@@ -1,7 +1,7 @@
 import { db } from "../firebase/firebase-config"
 import { loadNotes } from "../helpers/loadNotes"
 import types from "../typesReducer/types"
-import 'animate.css';
+
 
 import Swal from 'sweetalert2'
 import { fileUpload } from "../helpers/fileUpload"
